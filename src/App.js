@@ -13,7 +13,7 @@ class App extends Component {
             Welcome To React
           </p>
         </header><br/>
-        <div className="App-content">
+        <div className="App-component">
           <AutoCompleteText />
         </div>
       </div>
