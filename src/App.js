@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import HideableText from './HideableText';
+import AutoCompleteText from './AutoCompleteText';
 
 class App extends Component {
   render() {
@@ -12,9 +12,9 @@ class App extends Component {
           <p>
             Welcome To React
           </p>
-        </header>
+        </header><br/>
         <div className="App-content">
-          <HideableText text="Dynamic Text!" />
+          <AutoCompleteText />
         </div>
       </div>
     );
