@@ -11,6 +11,7 @@ export default class AutoCompleteText extends React.Component {
 		]
 
 		this.state = {
+			text: '',
 			suggestions: [],
 		};
 	}
@@ -23,7 +24,14 @@ export default class AutoCompleteText extends React.Component {
 			suggestions = this.items.sort().filter(item => regex.test(item));
 		}
 		
-		this.setState(() => ({ suggestions }));
+		this.setState(() => ({ suggestions, text: value }));
+	}
+
+	suggestionSelected(value) {
+		this.setState(() => ({
+			text: value,
+			suggestions: [],
+		}));
 	}
 
 	renderSuggestions() {
@@ -34,15 +42,16 @@ export default class AutoCompleteText extends React.Component {
 
 		return (
 			<ul>
-				{suggestions.map((item) => <li>{item}</li>)}
+				{suggestions.map((item) => <li onClick={() => this.suggestionSelected(item)}>{item}</li>)}
 			</ul>
 		)
 	}
 
 	render() {
+		const { text } = this.state;
 		return (
 			<div>
-				<input onChange={this.onTextChanged} type="text"/>
+				<input onChange={this.onTextChanged} type={text} value={text}/>
 				{this.renderSuggestions()}
 			</div>
 		);
