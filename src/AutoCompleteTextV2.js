@@ -1,7 +1,7 @@
 import React from 'react';
 import './AutoCompleteText.css';
 
-export default class AutoCompleteText extends React.Component {
+export default class AutoCompleteText2 extends React.Component {
 	constructor(props) {
 		super(props);
 		// this.items = [
@@ -13,7 +13,7 @@ export default class AutoCompleteText extends React.Component {
 
 		this.state = {
 			text: '',
-			suggestions: [],
+			suggestions: []
 		};
 	}
 
@@ -27,20 +27,18 @@ export default class AutoCompleteText extends React.Component {
 		}
 
 		this.setState(() => ({ suggestions, text: value }));
-	}
+	};
 
 	async getWords(value) {
 		let array = [];
 		let promise = fetch("https://api.datamuse.com/words?sp=" + value + "*&max=3")
 		.then(res => res.json())
 		.then(data => {
-			let firstWord = (data[0].word !== undefined) ? data[0].word : '';
-			let secondWord = (data[1].word !== undefined) ? data[1].word : '';
-			let thirdWord = (data[2].word !== undefined) ? data[2].word : '';
-			let fourthWord = (data[2].word !== undefined) ? data[2].word : '';
-			let fifthWord = (data[2].word !== undefined) ? data[2].word : '';
+			let firstWord = data[0].word;
+			let secondWord = data[1].word;
+			let thirdWord = data[2].word;
 			
-			array = new Array(firstWord, secondWord, thirdWord, fourthWord, fifthWord);
+			array = new Array(firstWord, secondWord, thirdWord);
 
 			return array;
 		})
@@ -54,7 +52,7 @@ export default class AutoCompleteText extends React.Component {
 	suggestionSelected(value) {
 		this.setState(() => ({
 			text: value,
-			suggestions: [],
+			suggestions: []
 		}));
 	}
 
@@ -65,9 +63,9 @@ export default class AutoCompleteText extends React.Component {
 		}
 
 		return (
-			<ul>
-				{suggestions.map((item, key) => <li key={key} onClick={() => this.suggestionSelected(item)}>{item}</li>)}
-			</ul>
+			<datalist id="browsers">
+				{suggestions.map((item, key) => <option id={key} value={item} />)}
+			</datalist> 
 		)
 	}
 
@@ -75,7 +73,7 @@ export default class AutoCompleteText extends React.Component {
 		const { text } = this.state;
 		return (
 			<div className="AutoCompleteText">
-				<input onChange={this.onTextChanged} type={text} value={text}/>
+				<input type="search" list="browsers" autoComplete="off" onChange={this.onTextChanged} value={text} />
 				{this.renderSuggestions()}
 			</div>
 		);
